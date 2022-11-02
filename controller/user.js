@@ -51,3 +51,36 @@ exports.userEdit = async (req, res, next) => {
 		console.log("ERROR", error)
 	}
 }
+
+exports.userGetAll = async (req, res) => {
+	try {
+	  let user = await User.find();
+	  res.json(user);
+	} catch (err) {
+	  console.log(err);
+	}
+}
+
+exports.userGetByID = async (req, res) => {
+	try {
+	  // Find user by id
+	  let user = await User.findById(req.params.id);
+	  res.json(user);
+	} catch (err) {
+	  console.log(err);
+	}
+}
+
+exports.userDelete = async (req, res) => {
+	try {
+	  // Find user by id
+	  let user = await User.findById(req.params.id);
+	  // Delete image from cloudinary
+	  await cloudinary.uploader.destroy(user.cloudinary_id);
+	  // Delete user from db
+	  await user.remove();
+	  res.json(user);
+	} catch (err) {
+	  console.log(err);
+	}
+  }
