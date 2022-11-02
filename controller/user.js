@@ -4,7 +4,7 @@ const cloudinary = require("../utils/cloudinary");
 exports.userPost = async (req, res, next) => {
 	try {
 		//upload image to cloudinary
-		const result = await cloudinary.uploader.upload(req.file.path)
+		const result = await cloudinary.uploader.upload(req.file.path, {folder: `playground/clients/${req.body.name}`})
 		
 		// Create new user
 		let user = new User({
@@ -36,7 +36,7 @@ exports.userEdit = async (req, res, next) => {
 		let result;
 
 		if(req.file){
-			result = await cloudinary.uploader.upload(req.file.path)
+			result = await cloudinary.uploader.upload(req.file.path, {folder: `playground/clients/${user.name}`})
 		}
 
 		const data = {
